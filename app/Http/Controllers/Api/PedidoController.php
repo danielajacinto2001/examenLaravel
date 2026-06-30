@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
-use App\Models\Producto;
 
-class ProductoController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Producto::with('categoria', 'proveedor')->get();
+        return Pedido::with('cliente', 'productos')->get();
     }
 
     /**
@@ -21,33 +21,34 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $producto = Producto::create($request->all());
-        return response()->json($producto, 201);
+        $pedido =Pedido::create($request->all());
+        return response()->json($pedido,201);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Producto $producto)
+    public function show(Pedido $pedido)
     {
-        return $producto->load('categoria', 'proveedor');
+        return  $pedido->load('cliente', 'producto');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Producto $producto)
+    public function update(Request $request, Pedido $pedido)
     {
-        $producto->update($request->all());
-        return response()->json($producto, 200);
+       $pedido->update($request->all());
+       return response()->json($pedido,200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Producto $producto)
+    public function destroy(Pedido $pedido)
     {
-        $producto->delete();
+        $pedido->delete();
         return response()->json(null, 204);
     }
 }
