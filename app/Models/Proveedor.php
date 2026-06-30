@@ -5,19 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model
+class Proveedor extends Model
 {
-    use HasFactory;
+    Use HasFactory;
 
-    protected $table = "categorias";
+    protected $table = 'proveedores';
 
     protected $fillable = [
         'nombre',
-        'descripcion'
+        'email',
+        'telefono',
+        'direccion',
     ];
 
-    //pertenece a muhcos products
-    public function productos(){
+    //1:M -> UN PROVEEdor TIENE MUCHOS PEDIDOS
+    public function pedidos(){
         return $this->hasMany(Producto::class);
     }
 }
